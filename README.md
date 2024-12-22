@@ -25,7 +25,7 @@ window.addEventListener('editor-markdown::setup', event => {
 </script>
 ```
 
-Alternatively, you might want to host the bundle elsewhere.
+Note that this snippet will not work verbatim due to CORS, you will need to host the bundle elsewhere (either directly on BookStack or on a server with permissive CORS headers).
 
 ## Customization
 
