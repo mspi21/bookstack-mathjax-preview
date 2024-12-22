@@ -1,39 +1,49 @@
-# markdown-it-mathjax3
+# bookstack-mathjax-preview
 
-Add Math to your Markdown
+A helper library to add MathJax support to the BookStack Markdown editor preview.
 
-This is a fork of [markdown-it-katex](http://waylonflinn.github.io/markdown-it-katex/) to support MathJax v3 and SVG rendering.
+This is a fork of [markdown-it-mathjax3](https://github.com/tani/markdown-it-mathjax3), which is a MarkdownIt plugin adding support for MathJax v3 and SVG rendering. This copy was modified specifically for use in BookStack, more precisely to enable live LaTeX preview when using the markdown editor.
 
 ## Quick Start
 
-1. Install markdown-it and this plugin
+1. Install all dependencies and build the minified bundle:
 
-   ```
-   npm install markdown-it markdown-it-mathjax3
-   ```
+  ```sh
+  npm install
+  npm run build
+  ```
 
-2. Use it in your  code
+2. Host the resulting file (`dist/bundle.js`) somewhere on your server.
 
-   ```javascript
-   var md = require('markdown-it')(),
-       mathjax3 = require('markdown-it-mathjax3');
-   
-   md.use(mathjax3);
-   
-   // double backslash is required for javascript strings, but not html input
-   var result = md.render('# Math Rulez! \n  $\\sqrt{3x-1}+(1+x)^2$');
-   ```
+3. Update your "Custom HTML Head Content" in BookStack settings:
+
+  ```html
+  <script type="importmap">
+  {
+    "imports": {
+      "bookstack-mathjax-preview": "https://your-example-server[.]com/path/to/bundle.js"
+    }
+  }
+  </script>
+  <script type="module">
+  import MathJaxPreview from 'bookstack-mathjax-preview';
+  window.addEventListener('editor-markdown::setup', event => {
+    const mdIt = event.detail.markdownIt;
+    mdIt.use(MathJaxPreview, { tex: { inlineMath: [['$', '$']] } });
+  });
+  </script>
+  ```
 
 ## Customization
 
-This plugin accepts the MathJax configuration.
+This plugin accepts MathJax configuration.
 Instead of `<script>window.MathJax = { tex: ..., svg: ...}</script>`,
-pass it like `md.use(mathjax3, { tex: ..., svg: ... })`.
+pass it like `mdIt.use(MathJaxPreview, { tex: ..., svg: ... })`.
 
 ## FAQ
 
 - How to attach equation tags?
-  -- Pass the options like `md.use(mathjax3, { tex: {tags: 'ams'} })`
+  -- Pass the options like `mdIt.use(MathJaxPreview, { tex: {tags: 'ams'} })`
 
 ## Examples
 

@@ -29,7 +29,14 @@ interface ConvertOptions {
   display: boolean
 }
 
+function deescape(content: string) {
+  return content.replace(/\\(.)/g, "$1");
+}
+
 function renderMath(content: string, documentOptions: DocumentOptions, convertOptions: ConvertOptions): string {
+  // Bookstack first escapes the Markdown content when converting to HTML
+  content = deescape(content);
+
   const adaptor = liteAdaptor();
   const handler = RegisterHTMLHandler(adaptor);
   AssistiveMmlHandler(handler);
@@ -84,10 +91,10 @@ function math_inline(state: StateInline, silent: boolean) {
     return true;
   }
 
-  // First check for and bypass all properly escaped delimieters
+  // First check for and bypass all properly escaped delimiters
   // This loop will assume that the first leading backtick can not
   // be the first character in state.src, which is known since
-  // we have found an opening delimieter already.
+  // we have found an opening delimiter already.
   const start = state.pos + 1;
   let match = start;
   while ((match = state.src.indexOf("$", match)) !== -1) {

@@ -1,11 +1,12 @@
 {
-  "name": "markdown-it-mathjax3",
+  "name": "bookstack-mathjax-preview",
   "version": "4.3.2",
-  "description": "Fast math support for markdown-it with MathJax",
+  "description": "MathJax support for BookStack editor preview",
   "main": "index.js",
+  "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:nzt/markdown-it-mathjax3.git"
+    "url": "git+ssh://git@github.com:mspi21/bookstack-mathjax-preview.git"
   },
   "keywords": [
     "markdown",
@@ -13,23 +14,29 @@
     "math",
     "LaTeX",
     "markdown-it-plugin",
-    "markdown-it"
+    "markdown-it",
+    "BookStack"
   ],
-  "author": "TANIGUCHI Masaya",
+  "author": "Milan Špinka",
   "license": "MIT",
   "dependencies": {
     "juice": "^8.0.0",
     "mathjax-full": "^3.2.0"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.2",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@rollup/plugin-terser": "^0.4.4",
     "@types/markdown-it": "^12.2.1",
     "markdown-it": "^12.3.2",
     "prettier": "^2.3.2",
+    "rollup": "^4.29.1",
     "typescript": "^4.4.2"
   },
   "scripts": {
     "prepublish": "npm run build",
-    "build": "npm run build:code && npm run build:type",
+    "build": "npm run build:code && npm run build:type && npx rollup -c",
     "build:code": "tsc",
     "build:type": "tsc -d",
     "format": "prettier --write *.ts *.json"
@@ -39,6 +46,7 @@
     "README.md",
     "index.js",
     "index.d.ts",
-    "package.json"
+    "package.json",
+    "rollup.config.js"
   ]
 }
