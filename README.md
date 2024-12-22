@@ -6,33 +6,26 @@ This is a fork of [markdown-it-mathjax3](https://github.com/tani/markdown-it-mat
 
 ## Quick Start
 
-1. Install all dependencies and build the minified bundle:
+Update your "Custom HTML Head Content" in BookStack settings:
 
-  ```sh
-  npm install
-  npm run build
-  ```
-
-2. Host the resulting file (`dist/bundle.js`) somewhere on your server.
-
-3. Update your "Custom HTML Head Content" in BookStack settings:
-
-  ```html
-  <script type="importmap">
-  {
-    "imports": {
-      "bookstack-mathjax-preview": "https://your-example-server[.]com/path/to/bundle.js"
-    }
+```html
+<script type="importmap">
+{
+  "imports": {
+    "bookstack-mathjax-preview": "https://raw.githubusercontent.com/mspi21/bookstack-mathjax-preview/refs/heads/master/dist/bundle.js"
   }
-  </script>
-  <script type="module">
-  import MathJaxPreview from 'bookstack-mathjax-preview';
-  window.addEventListener('editor-markdown::setup', event => {
-    const mdIt = event.detail.markdownIt;
-    mdIt.use(MathJaxPreview, { tex: { inlineMath: [['$', '$']] } });
-  });
-  </script>
-  ```
+}
+</script>
+<script type="module">
+import MathJaxPreview from 'bookstack-mathjax-preview';
+window.addEventListener('editor-markdown::setup', event => {
+  const mdIt = event.detail.markdownIt;
+  mdIt.use(MathJaxPreview, { tex: { inlineMath: [['$', '$']] } });
+});
+</script>
+```
+
+Alternatively, you might want to host the bundle elsewhere.
 
 ## Customization
 
